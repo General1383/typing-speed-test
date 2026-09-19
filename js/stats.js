@@ -1,0 +1,1 @@
+// محاسبه WPM/CPM/Accuracy

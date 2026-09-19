@@ -1,0 +1,1 @@
+// State مرکزی + subscription + setState
