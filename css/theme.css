@@ -1,1 +1,67 @@
 /*متغیرهای رنگ، تم روشن/تاریک*/
+
+:root{
+    --bg: #ffffff;
+    --bg-alt: #f5f7fa;
+    --bg-elavated: #ffffff;
+    --text: #1a1a1a;
+    --text-muted:#6b7280;
+    --border:#e5e7eb;
+
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-text: #ffffff;
+
+  
+  --correct: #10b981;
+  --correct-bg: #d1fae5;
+  --wrong: #ef4444;
+  --wrong-bg: #fee2e2;
+  --current: #6366f1;
+  --pending: #9ca3af;
+
+  
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  --font-mono: 'Courier New', 'Vazirmatn', monospace;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+
+
+  --transition: 150ms ease;
+}
+
+[data-theme='dark'] {
+  --bg: #0f172a;
+  --bg-alt: #1e293b;
+  --bg-elevated: #1e293b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #334155;
+
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --primary-text: #0f172a;
+
+  --correct: #34d399;
+  --correct-bg: #064e3b;
+  --wrong: #f87171;
+  --wrong-bg: #7f1d1d;
+  --current: #818cf8;
+  --pending: #64748b;
+
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.5);
+}

@@ -1,1 +1,109 @@
 /*	استایل کاراکترهای متن (correct/wrong/current)*/
+
+
+.text-display {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 2;
+  letter-spacing: 0.5px;
+  direction: ltr;
+  text-align: left;
+  user-select: none;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.text-display[dir='rtl'] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* ===== کاراکترها ===== */
+.char {
+  position: relative;
+  transition: color var(--transition), background-color var(--transition);
+  border-radius: 2px;
+}
+
+/* کاراکترهای آینده */
+.char.pending {
+  color: var(--pending);
+}
+
+/* کاراکترهای درست */
+.char.correct {
+  color: var(--correct);
+}
+
+/* کاراکترهای غلط */
+.char.wrong {
+  color: var(--wrong);
+  background-color: var(--wrong-bg);
+  text-decoration: underline;
+  text-decoration-color: var(--wrong);
+  text-decoration-style: wavy;
+  text-underline-offset: 3px;
+}
+
+/* کاراکتر جاری */
+.char.current {
+  color: var(--current);
+  background-color: var(--correct-bg);
+  border-radius: 2px;
+  animation: blink 1s ease-in-out infinite;
+}
+
+/* کاراکتر جاری وقتی غلط زده شده */
+.char.current.wrong {
+  background-color: var(--wrong-bg);
+  color: var(--wrong);
+}
+
+/* اسپیس‌ها */
+.char.space.wrong {
+  background-color: var(--wrong-bg);
+}
+
+/* ===== انیمیشن چشمک ===== */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ===== Input مخفی ===== */
+.hidden-input {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===== حالت غیرفعال متن ===== */
+.text-display.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ===== ریسپانسیو ===== */
+@media (max-width: 640px) {
+  .text-display {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .char.current {
+    animation: none;
+    background-color: var(--correct-bg);
+  }
+}

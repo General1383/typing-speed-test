@@ -1,24 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="تست سرعت تایپ فارسی و انگلیسی">
 
-     <link rel="stylesheet" href="css/reset.css">
-     <link rel="stylesheet" href="css/theme.css">
-     <link rel="stylesheet" href="css/layout.css">
-     <link rel="stylesheet" href="css/components.css">
-     <link rel="stylesheet" href="css/typing.css">
+  <title>تست سرعت تایپ</title>
 
-    <title>typing-speed-test</title>
+  <link rel="icon" href="data:,">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/typing.css">
 </head>
 <body>
 
+  <main id="app">
 
+    <!-- ===== هدر ===== -->
+    <header class="app-header">
+      <h1>تست سرعت تایپ</h1>
 
-<main id="app">
+      <div class="header-actions">
+        <button
+          id="theme-toggle"
+          class="icon-btn"
+          type="button"
+          aria-label="تغییر تم"
+          title="تغییر تم"
+        >
+          🌙
+        </button>
 
-    
-    <script type="module" src="js/main.js"></script>
+        <button
+          id="settings-toggle"
+          class="icon-btn"
+          type="button"
+          aria-label="تنظیمات"
+          title="تنظیمات"
+        >
+          ⚙️
+        </button>
+      </div>
+    </header>
+
+    <!-- ===== نوار تنظیمات ===== -->
+    <section class="settings-bar" aria-label="تنظیمات تست">
+      <label for="language-select">
+        زبان
+        <select id="language-select" aria-label="انتخاب زبان">
+          <option value="fa">فارسی</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+
+      <label for="duration-select">
+        زمان
+        <select id="duration-select" aria-label="انتخاب مدت زمان">
+          <option value="15">۱۵ ثانیه</option>
+          <option value="30" selected>۳۰ ثانیه</option>
+          <option value="60">۶۰ ثانیه</option>
+        </select>
+      </label>
+
+      <label for="sound-toggle">
+        صدا
+        <input
+          type="checkbox"
+          id="sound-toggle"
+          checked
+          aria-label="فعال/غیرفعال کردن صدا"
+        >
+      </label>
+    </section>
+
+    <!-- ===== نوار آمار ===== -->
+    <section class="stats-bar" aria-label="آمار زنده">
+      <div class="stat">
+        <span class="stat-label">WPM</span>
+        <span class="stat-value" id="wpm-display">0</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-label">CPM</span>
+        <span class="stat-value" id="cpm-display">0</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-label">دقت</span>
+        <span class="stat-value" id="accuracy-display">100%</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-label">زمان</span>
+        <span
+          class="stat-value"
+          id="timer-display"
+          aria-live="polite"
+          aria-atomic="true"
+        >30</span>
+      </div>
+
+      <div class="progress-bar" role="progressbar" aria-label="پیشرفت زمان">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </section>
+
+    <!-- ===== بخش متن ===== -->
+    <section class="text-section">
+      <div
+        id="text-display"
+        class="text-display"
+        dir="ltr"
+        aria-label="متن تست"
+        aria-live="off"
+      ></div>
+
+      <input
+        type="text"
+        id="hidden-input"
+        class="hidden-input"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        aria-label="محل تایپ"
+      >
+    </section>
+
+    <!-- ===== نوار کنترل ===== -->
+    <footer class="controls-bar">
+      <button
+        id="start-btn"
+        class="btn-primary"
+        type="button"
+      >
+        شروع
+      </button>
+
+      <p class="hint">
+        <kbd>Tab</kbd> برای ریستارت سریع
+      </p>
+    </footer>
+
+    <!-- ===== صفحه‌ی نتیجه ===== -->
+    <section
+      id="result-screen"
+      class="result-screen"
+      aria-label="نتیجه تست"
+      hidden
+    >
+      <h2>آفرین! 🎉</h2>
+
+      <div class="result-stats">
+        <div class="result-stat">
+          <span class="result-label">WPM</span>
+          <span class="result-value" id="result-wpm">0</span>
+        </div>
+
+        <div class="result-stat">
+          <span class="result-label">CPM</span>
+          <span class="result-value" id="result-cpm">0</span>
+        </div>
+
+        <div class="result-stat">
+          <span class="result-label">دقت</span>
+          <span class="result-value" id="result-accuracy">0%</span>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="result-chart" aria-label="نمودار ۱۰ تست آخر"></canvas>
+      </div>
+
+      <button
+        id="restart-btn"
+        class="btn-primary"
+        type="button"
+      >
+        دوباره
+      </button>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/main.js"></script>
+
 </body>
 </html>
