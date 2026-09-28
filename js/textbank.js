@@ -32,54 +32,47 @@ const WORDS_FA = [
   'آبی', 'سبز', 'زرد', 'سفید', 'سیاه'
 ];
 
+function pickRandomWords(list, count) {     
+  const result = [];
+  let lastPicked = null;
 
-function pickrandomwords(lisr , count){
+  for (let i = 0; i < count; i++) {
+    let word;
 
-    const result =[];
-    let lastPicked = null;
+    do {
+      const randomIndex = Math.floor(Math.random() * list.length);
+      word = list[randomIndex];
+    } while (word === lastPicked);
 
-    for (let i =0 ; i < count ; i++){
-        let word;
+    result.push(word);
+    lastPicked = word;
+  }
 
+  return result;
+}
 
-        do{
+function getWordCountForDuration(duration) {
+  switch (duration) {
+    case 15: return 30;
+    case 30: return 60;
+    case 60: return 120;
+    default: return 60;
+  }
+}
 
-            const randomindex = Math.floor(Math.random() * list.length)
-            word = list[randomindex];
+function generateText(language, wordCount) { 
+  let list;
 
-        }while(word === lastPicked)
+  if (language === 'en') {
+    list = WORDS_EN;
+  } else {
+    list = WORDS_FA;
+  }
 
-       result.push(word);
+  const words = pickRandomWords(list, wordCount);  
+  return words.join(' ');
+}
 
-       lastPicked = word;
-
-    };
-return (result)
-};
-
-function getWordCountForDuration (duration){
-
-    switch(duration){
-        case 15 : return 30;
-        case 30 : return 60; 
-        case 60 : return 120; 
-        default :return 60;
-    }
-
-};
-
-function generateText(language , wordCount){
-
-    let list;
-
-    if(language === 'en'){
-        list = WORDS_EN;
-
-    }else{
-        list =WORDS_FA;
-    }
-
-};
 export {
   WORDS_EN,
   WORDS_FA,
@@ -87,4 +80,3 @@ export {
   getWordCountForDuration,
   generateText
 };
-
