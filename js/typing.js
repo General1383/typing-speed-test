@@ -3,7 +3,7 @@
 import { getState, setState } from './state.js';
 import { normalizeChar } from './normalize.js';
 import { updateCharHighlight, setCurrentChar } from './ui.js';
-
+import { startTimer } from './timer.js';
 function startTyping() {
   const state = getState();
   if (state.status === 'running') return;
@@ -12,6 +12,8 @@ function startTyping() {
     status: 'running',
     startedAt: Date.now()
   });
+
+  startTimer();
 }
 
 function handleInput(char) {

@@ -1,90 +1,73 @@
-// State مرکزی + subscription + setState
-
+// state.js — State مرکزی + subscription + setState
 
 const initialState = {
+  status: 'idle',
 
-    status: 'adie',
+  // settings
+  language: 'fa',
+  duration: 30,
+  theme: 'light',
+  sound: 'on',
 
-    //seating
+  // text
+  text: '',
+  chars: [],
+  input: '',
+  currentIndex: 0,
 
-    language: 'fa',
-    duration:'30',
-    theme: 'light',
-    sound: 'on',
+  // stats
+  correct: 0,
+  wrong: 0,
+  wpm: 0,
+  cpm: 0,
+  accuracy: 0,
 
-    //text
+  // time
+  startedAt: null,
+  remaining: 30,
 
-    Text:'',
-    chars:[],
-    input:'',
-    currentindex:0,
-
-    //charts
-
-    correct: 0,
-    wrong: 0,
-    wpm: 0,
-    cpm: 0,
-    accuracy: 0,
-
-    //time
-
-    startedAt: null,
-    remaining: 30,
-
-    //history
-
-    history: [],
-
+  // history
+  history: []
 };
 
+let state = { ...initialState };
+let listeners = [];
 
-let state ={...initialState}
-let listeners =[]
-
-export function getState(){
-
-    return {...state}
-};
-
+export function getState() {
+  return { ...state };
+}
 
 export function setState(patch) {
-
   state = { ...state, ...patch };
 
   listeners.forEach((callback) => {
-
     try {
       callback(state);
     } catch (error) {
       console.error('Listener error:', error);
     }
   });
-};
+}
 
+export function subscribe(callback) {
+  listeners.push(callback);
 
+  return function unsubscribe() {
+    listeners = listeners.filter((cb) => cb !== callback);
+  };
+}
 
-export function subscribe(callback){
-    listeners.push(callback)
+export function resetState() {
+  const { theme, language, duration, sound, history } = state;
 
-    return function unsubscribe(){
-        listeners = listeners.filter((cb) => cb != callback);
+  state = {
+    ...initialState,
+    theme,
+    language,
+    duration,
+    sound,
+    history
+  };
 
-    }
-};
-
-export function resetState(){
-
-    const  {theme , language,duration, sound, history} = state
-     state ={
-        ...initialState,
-        theme,
-        language,
-        duration,
-        sound,
-        history
-     };
-
-     listeners.forEach((callback) =>callback(state))
-
-};
+  listeners.forEach((callback) => callback(state));
+}
