@@ -23,18 +23,38 @@ function renderText(text) {
 }
 
 function setDirection(language) {
-  
   const el = document.getElementById('text-display');
   el.setAttribute('dir', language === 'fa' ? 'rtl' : 'ltr');
 }
 
 function render() {
-
   const state = getState();
   if (!state.text) return;
-
   setDirection(state.language);
   renderText(state.text);
 }
 
-export { render, renderText, setDirection };
+function updateCharHighlight(index, isCorrect) {
+  const container = document.getElementById('text-display');
+  const span = container.children[index];
+  if (!span) return;
+
+  span.classList.remove('pending', 'current');
+  span.classList.add(isCorrect ? 'correct' : 'wrong');
+}
+
+function setCurrentChar(index) {
+  const container = document.getElementById('text-display');
+  const span = container.children[index];
+  if (!span) return;
+
+  span.classList.add('current');
+}
+
+export {
+  render,
+  renderText,
+  setDirection,
+  updateCharHighlight,
+  setCurrentChar
+};

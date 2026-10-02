@@ -65,7 +65,7 @@
   background-color: var(--wrong-bg);
 }
 
-/* ===== انیمیشن چشمک ===== */
+/*  انیمیشن چشمک  */
 @keyframes blink {
   0%,
   100% {
@@ -76,17 +76,18 @@
   }
 }
 
-/* ===== Input مخفی ===== */
+/*  Input مخفی پ */
 .hidden-input {
   position: absolute;
-  left: -9999px;
+  top: 0;
+  left: 0;
   width: 1px;
   height: 1px;
   opacity: 0;
   pointer-events: none;
+  z-index: -1;
 }
-
-/* ===== حالت غیرفعال متن ===== */
+/* پ حالت غیرفعال متن پ */
 .text-display.disabled {
   opacity: 0.6;
   pointer-events: none;

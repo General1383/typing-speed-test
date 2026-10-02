@@ -1,8 +1,39 @@
-// اتصال همه به هم + init
+// main.js — اتصال همه‌ی ماژول‌ها و راه‌اندازی اپ
 
 import { getState, setState } from './state.js';
 import { generateText, getWordCountForDuration } from './textbank.js';
 import { render } from './ui.js';
+import { handleInput } from './typing.js';
+
+function setupInput() {
+  const input = document.getElementById('hidden-input');
+  const textSection = document.querySelector('.text-section');
+
+  // کلیک روی ظرف متن → فوکوس اینپوت
+  textSection.addEventListener('click', () => {
+    input.focus();
+  });
+
+  // گرفتن ورودی
+  input.addEventListener('input', (e) => {
+    const value = e.target.value;
+    if (!value) return;
+
+    const char = value[value.length - 1];
+    handleInput(char);
+    e.target.value = '';
+  });
+
+  // اگه فوکوس از دست رفت، برگردون
+  input.addEventListener('blur', () => {
+    if (getState().status === 'running') {
+      input.focus();
+    }
+  });
+
+  // فوکوس اولیه
+  input.focus();
+}
 
 function init() {
   const state = getState();
@@ -16,6 +47,7 @@ function init() {
   });
 
   render();
+  setupInput();
 }
 
 init();
