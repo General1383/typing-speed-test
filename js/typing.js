@@ -1,9 +1,11 @@
 // typing.js — منطق تایپ + ورودی + هایلایت
 
-import { getState, setState } from './state.js';
+import { getState, setState, resetState } from './state.js';
 import { normalizeChar } from './normalize.js';
-import { updateCharHighlight, setCurrentChar } from './ui.js';
-import { startTimer } from './timer.js';
+import { updateCharHighlight, setCurrentChar, showResult, hideResult, render } from './ui.js';
+import { startTimer, stopTimer } from './timer.js';
+import { generateText, getWordCountForDuration } from './textbank.js';
+
 function startTyping() {
   const state = getState();
   if (state.status === 'running') return;
@@ -17,6 +19,7 @@ function startTyping() {
 }
 
 function handleInput(char) {
+  
   const state = getState();
   if (state.status === 'finished') return;
 
@@ -40,9 +43,55 @@ function handleInput(char) {
 
   updateCharHighlight(current.currentIndex, isCorrect);
   setCurrentChar(current.currentIndex + 1);
+
+  // اگه متن تموم شد
+  if (current.currentIndex + 1 >= current.chars.length) {
+    finish();
+  }
+}
+
+function finish() {
+  const state = getState();
+  if (state.status === 'finished') return;
+
+  setState({ status: 'finished' });
+
+  stopTimer();
+  showResult();
+}
+
+function restart() {
+  stopTimer();
+  resetState();
+
+  const state = getState();
+  const wordCount = getWordCountForDuration(state.duration);
+  const text = generateText(state.language, wordCount);
+
+  setState({
+    text: text,
+    chars: text.split(''),
+    currentIndex: 0,
+    remaining: state.duration
+  });
+
+  hideResult();
+  render();
+
+  const progressFill = document.getElementById('progress-fill');
+  if (progressFill) progressFill.style.width = '0%';
+
+  const timerDisplay = document.getElementById('timer-display');
+  if (timerDisplay) timerDisplay.textContent = state.duration;
+
+  document.getElementById('wpm-display').textContent = '0';
+  document.getElementById('cpm-display').textContent = '0';
+  document.getElementById('accuracy-display').textContent = '100%';
 }
 
 export {
   startTyping,
-  handleInput
+  handleInput,
+  finish,
+  restart
 };

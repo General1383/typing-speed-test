@@ -2,6 +2,7 @@
 
 import { getState, setState } from './state.js';
 import { calcWPM, calcCPM, calcAccuracy, getElapsedSeconds } from './stats.js';
+import { finish } from './typing.js';
 
 let intervalId = null;
 
@@ -47,6 +48,7 @@ function tick() {
   // پایان
   if (remaining <= 0) {
     stopTimer();
+     finish();
   }
 }
 

@@ -3,7 +3,7 @@
 import { getState, setState } from './state.js';
 import { generateText, getWordCountForDuration } from './textbank.js';
 import { render } from './ui.js';
-import { handleInput } from './typing.js';
+import { handleInput, restart } from './typing.js';
 
 function setupInput() {
   const input = document.getElementById('hidden-input');
@@ -48,6 +48,22 @@ function init() {
 
   render();
   setupInput();
+   setupControls();
 }
 
 init();
+
+
+function setupControls() {
+  // دکمه‌ی «دوباره»
+  const restartBtn = document.getElementById('restart-btn');
+  restartBtn.addEventListener('click', restart);
+
+  //  ریستارت
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      restart();
+    }
+  });
+}

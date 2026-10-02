@@ -49,6 +49,22 @@ function setCurrentChar(index) {
   if (!span) return;
 
   span.classList.add('current');
+};
+
+function showResult() {
+  const state = getState();
+
+  document.getElementById('result-wpm').textContent = state.wpm;
+  document.getElementById('result-cpm').textContent = state.cpm;
+  document.getElementById('result-accuracy').textContent = state.accuracy + '%';
+
+  const screen = document.getElementById('result-screen');
+  screen.hidden = false;
+}
+
+function hideResult() {
+  const screen = document.getElementById('result-screen');
+  screen.hidden = true;
 }
 
 export {
@@ -56,5 +72,7 @@ export {
   renderText,
   setDirection,
   updateCharHighlight,
-  setCurrentChar
+  setCurrentChar,
+    showResult,
+  hideResult
 };
