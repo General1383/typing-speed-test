@@ -44,9 +44,17 @@ function applySettings() {
   return settings;
 }
 
+function updateSetting(key, value) {
+  const current = loadSettings();
+  const updated = { ...current, [key]: value };
+  saveSettings(updated);
+  setState({ [key]: value });
+}
+
 export {
   DEFAULT_SETTINGS,
   loadSettings,
   saveSettings,
-  applySettings
+  applySettings,
+  updateSetting
 };

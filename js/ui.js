@@ -1,6 +1,7 @@
 // ui.js — رندر DOM و صفحه‌ی نتیجه
 
 import { getState } from './state.js';
+import { drawChart } from './chart.js';
 
 function renderText(text) {
   const container = document.getElementById('text-display');
@@ -49,7 +50,7 @@ function setCurrentChar(index) {
   if (!span) return;
 
   span.classList.add('current');
-};
+}
 
 function showResult() {
   const state = getState();
@@ -58,8 +59,12 @@ function showResult() {
   document.getElementById('result-cpm').textContent = state.cpm;
   document.getElementById('result-accuracy').textContent = state.accuracy + '%';
 
+  // اول صفحه رو نشون بده
   const screen = document.getElementById('result-screen');
   screen.hidden = false;
+
+  // بعد نمودار رو بکش
+  setTimeout(() => drawChart(), 50);
 }
 
 function hideResult() {
@@ -73,6 +78,6 @@ export {
   setDirection,
   updateCharHighlight,
   setCurrentChar,
-    showResult,
+  showResult,
   hideResult
 };

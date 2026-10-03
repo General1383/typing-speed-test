@@ -100,9 +100,16 @@ function restart() {
   const timerDisplay = document.getElementById('timer-display');
   if (timerDisplay) timerDisplay.textContent = state.duration;
 
-  document.getElementById('wpm-display').textContent = '0';
-  document.getElementById('cpm-display').textContent = '0';
-  document.getElementById('accuracy-display').textContent = '100%';
+  const wpm = document.getElementById('wpm-display');
+  const cpm = document.getElementById('cpm-display');
+  const accuracy = document.getElementById('accuracy-display');
+  if (wpm) wpm.textContent = '0';
+  if (cpm) cpm.textContent = '0';
+  if (accuracy) accuracy.textContent = '100%';
+
+  // فوکوس رو برگردون به اینپوت
+  const input = document.getElementById('hidden-input');
+  if (input) input.focus();
 }
 
 export {
