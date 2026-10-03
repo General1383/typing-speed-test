@@ -5,6 +5,7 @@ import { normalizeChar } from './normalize.js';
 import { updateCharHighlight, setCurrentChar, showResult, hideResult, render } from './ui.js';
 import { startTimer, stopTimer } from './timer.js';
 import { generateText, getWordCountForDuration } from './textbank.js';
+import { saveRecord } from './history.js';
 
 function startTyping() {
   const state = getState();
@@ -19,7 +20,6 @@ function startTyping() {
 }
 
 function handleInput(char) {
-  
   const state = getState();
   if (state.status === 'finished') return;
 
@@ -55,8 +55,24 @@ function finish() {
   if (state.status === 'finished') return;
 
   setState({ status: 'finished' });
-
   stopTimer();
+
+  // ذخیره‌ی نتیجه در تاریخچه
+  const record = {
+    id: Date.now(),
+    date: new Date().toISOString(),
+    language: state.language,
+    duration: state.duration,
+    wpm: state.wpm,
+    cpm: state.cpm,
+    accuracy: state.accuracy,
+    correct: state.correct,
+    wrong: state.wrong
+  };
+
+  const newHistory = saveRecord(record);
+  setState({ history: newHistory });
+
   showResult();
 }
 

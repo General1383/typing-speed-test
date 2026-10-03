@@ -4,6 +4,8 @@ import { getState, setState } from './state.js';
 import { generateText, getWordCountForDuration } from './textbank.js';
 import { render } from './ui.js';
 import { handleInput, restart } from './typing.js';
+import { applySettings } from './settings.js';
+import { loadHistory } from './history.js';
 
 function setupInput() {
   const input = document.getElementById('hidden-input');
@@ -35,31 +37,12 @@ function setupInput() {
   input.focus();
 }
 
-function init() {
-  const state = getState();
-  const wordCount = getWordCountForDuration(state.duration);
-  const text = generateText(state.language, wordCount);
-
-  setState({
-    text: text,
-    chars: text.split(''),
-    currentIndex: 0
-  });
-
-  render();
-  setupInput();
-   setupControls();
-}
-
-init();
-
-
 function setupControls() {
   // دکمه‌ی «دوباره»
   const restartBtn = document.getElementById('restart-btn');
   restartBtn.addEventListener('click', restart);
 
-  //  ریستارت
+  // کلید Tab برای ریستارت
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Tab') {
       e.preventDefault();
@@ -67,3 +50,31 @@ function setupControls() {
     }
   });
 }
+
+function init() {
+  // ۱. تنظیمات رو از localStorage لود کن
+  applySettings();
+
+  // ۲. تاریخچه رو لود کن
+  const history = loadHistory();
+  setState({ history });
+
+  // ۳. متن بساز
+  const state = getState();
+  const wordCount = getWordCountForDuration(state.duration);
+  const text = generateText(state.language, wordCount);
+
+  setState({
+    text: text,
+    chars: text.split(''),
+    currentIndex: 0,
+    remaining: state.duration
+  });
+
+  // ۴. UI
+  render();
+  setupInput();
+  setupControls();
+}
+
+init();
